@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchQuestion } from "../../service/kahootservice";
-const SearchForm = () => {
+
+const SearchForm = ({addQyA}) => {
     const [category, setCategory] = useState('');
     
     const handleCategoryChange = (event) => {
@@ -11,7 +12,7 @@ const SearchForm = () => {
         e.preventDefault();
         /* Funcion para el fetch */
         let response = await fetchQuestion({category});
-        console.log(response);
+        addQyA(response);
 
         /* Funcion para crear la pregunta */
     }
