@@ -4,7 +4,6 @@ export const getExamFromLS = () => localStorage.getItem("Examenes") || [];
 export const fetchQuestion = async ({ amount=10, category = 0 }) => {
     try {
         const consulta = new URLSearchParams({ amount,category });
-        console.log(consulta.toString());
         const { data } = await axios.get(`api.php?${consulta}`);
         const _results = data.results || [];
         return _results
