@@ -1,5 +1,5 @@
 const OldExams = ()=>{
-return <section>
+return <section id="oldExams-section">
     
 </section>
 }

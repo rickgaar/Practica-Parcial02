@@ -1,6 +1,6 @@
 import axios from "axios";
 export const saveExamInLS = (examenes = []) => localStorage.setItem("Examenes", JSON.stringify(examenes));
-export const getExamFromLS = () => localStorage.getItem("Examenes") || [];
+export const getExamFromLS = () => JSON.parse(localStorage.getItem("Examenes")) || [];
 export const fetchQuestion = async ({ amount=30, category = 0, type="multiple" }) => {
     try {
         const consulta = new URLSearchParams({ amount,category,type });
