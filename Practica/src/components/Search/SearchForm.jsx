@@ -17,7 +17,7 @@ const SearchForm = () => {
     
     return(
         <div className="bg-violet-400 justify-center w-full p-8 items-center">
-            <form className="flex flex-col gap-8 items-center">
+            <form className="flex flex-col gap-8 items-center" onSubmit={getData}>
                 <label htmlFor="category" className="text-center">Category:</label>
                 <select id="category" onChange={handleCategoryChange} className="h-8 w-1/2">
                     <option value={""}>Any Category</option>
