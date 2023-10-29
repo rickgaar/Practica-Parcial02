@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchQuestion } from "../../service/kahootservice";
-const SearchForm = () => {
+
+const SearchForm = ({addQyA}) => {
     const [category, setCategory] = useState('');
     
     const handleCategoryChange = (event) => {
@@ -11,12 +12,13 @@ const SearchForm = () => {
         e.preventDefault();
         /* Funcion para el fetch */
         let response = await fetchQuestion({category});
+        addQyA(response);
 
         /* Funcion para crear la pregunta */
     }
     
     return(
-        <div className="bg-violet-400 justify-center w-full p-8 items-center">
+        <div className="bg-violet-400 w-full p-8">
             <form className="flex flex-col gap-8 items-center" onSubmit={getData}>
                 <label htmlFor="category" className="text-center">Category:</label>
                 <select id="category" onChange={handleCategoryChange} className="h-8 w-1/2">
