@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { fetchQuestion } from "../../service/kahootservice";
-import Quiz from "../Quiz/Quiz";
 
-const SearchForm = () => {
+const SearchForm = ({getQuestions=()=>{}}) => {
 
-    const [questionsArray, setQuestionsArray] = useState([])
     const [category, setCategory] = useState('');
 
     const handleCategoryChange = (event) => {
@@ -15,7 +13,7 @@ const SearchForm = () => {
         e.preventDefault();
         /* Funcion para el fetch */
         let response = await fetchQuestion({ category });
-        setQuestionsArray(response);
+        getQuestions(response);
     }
 
     return (
@@ -37,7 +35,6 @@ const SearchForm = () => {
 
             </div>
 
-            <Quiz questionsArray={questionsArray}/>
         </section>
     );
 }

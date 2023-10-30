@@ -2,20 +2,30 @@ import Controls from "./Controls/Controls";
 import Questions from "./Questions/Questions";
 import { useEffect, useState } from "react";
 import { getExamFromLS, saveExamInLS } from "../../service/kahootservice";
+import { sortRandom } from "../../service/kahootservice";
 
-function Quiz({ questionsArray = [] }) {
+function Quiz({ questionsArray = []}) {
 
     const [QyA, setQyA] = useState([]);
     const [currentQuestion, setCurrentQuestion] = useState([]);
     const [position, setPosition] = useState(1);
-    const oldExams = getExamFromLS();
+    const [sortedAnswers, setSortedAnswers] = useState([]);
+    //const oldExams = getExamFromLS();
 
     useEffect(
-        () => { updateCurrentQuestion(position - 1) },
+        () => { updateCurrentQuestion(position - 1)},
         [position]);
 
     useEffect(
         () => {addQyA(questionsArray)}, [questionsArray]
+    );
+    useEffect(
+        ()=>
+        {
+            if(questionsArray.length != 0){
+                setSortedAnswers(sortRandom([currentQuestion.correct_answer, ...currentQuestion.incorrect_answers]));
+            }
+        }, [currentQuestion]
     );
 
     const updateCurrentQuestion = (pos) => {
@@ -23,13 +33,15 @@ function Quiz({ questionsArray = [] }) {
     }
 
     const addQyA = (QyA) => {
-        console.log(questionsArray);
         setQyA([...QyA]);
         setPosition(1);
         setCurrentQuestion(QyA[0]);
-        oldExams.push(QyA);
+        if(QyA.length != 0){
+            setSortedAnswers(sortRandom([QyA[0].correct_answer, ...QyA[0].incorrect_answers]));
+        }
+        //oldExams.push(QyA);
         //console.log(oldExams);
-        saveExamInLS(oldExams);
+        //saveExamInLS(oldExams);
     }
 
     const onPageChange = (_page = 0) => {
@@ -39,7 +51,7 @@ function Quiz({ questionsArray = [] }) {
         if (_position <= 0) {
             _position = 1;
         }
-        console.log(QyA.length);
+
         if (_position > (QyA.length)) {
             _position = QyA.length;
         }
@@ -51,7 +63,7 @@ function Quiz({ questionsArray = [] }) {
         <section className="flex flex-col pt-5 gap-3 items-center bg-violet-600 text-white py-8">
             {QyA.length != 0 && <Controls onPrev={() => { onPageChange(-1) }} onNext={() => { onPageChange(1) }} position={position} />}
 
-            {QyA.length != 0 && <Questions _q={currentQuestion.question} _a={[currentQuestion.correct_answer, ...currentQuestion.incorrect_answers]} key={currentQuestion.correct_answer} />}
+            {QyA.length != 0 && <Questions _q={currentQuestion.question} _a={currentQuestion.correct_answer} sortedAnswers={sortedAnswers} key={currentQuestion.correct_answer} />}
 
         </section>
     );

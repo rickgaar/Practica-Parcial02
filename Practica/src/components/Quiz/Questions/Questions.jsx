@@ -1,7 +1,17 @@
-import { sortRandom } from "../../../service/kahootservice";
+import { useState } from "react";
 
-const Questions = ({ _q = '', _a = [] }) => {
-    const sortedAnswers = sortRandom(_a);
+const Questions = ({ _q = '', _a = '' , sortedAnswers=[]}) => {
+
+    const [clicked, setClicked] = useState(false);
+
+    const clickHandler = ()=>{
+        setClicked(true);
+    }
+
+    /* sortedAnswers.map((e) => {
+        console.log(e + ' y ' + _a)
+    }); */
+
     return (
         <section className="flex flex-col items-center">
             <h2>{_q}</h2>
@@ -13,9 +23,9 @@ const Questions = ({ _q = '', _a = [] }) => {
 
                 {sortedAnswers.map((e) => {
 
-                    if (e === _a[0]) {
+                    if (e === _a) {
                         return (
-                            <button key={e} className="correct">{e}</button>
+                            <button key={e} onClick={clickHandler} className={`p-1 rounded ${(clicked === true) ? 'bg-green-500' : 'bg-transparent'}`}>{e}</button>
                         )
                     }
                     return (
