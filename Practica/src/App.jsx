@@ -3,6 +3,7 @@ import Header from "./components/Header/Header"
 import SearchForm from "./components/Search/SearchForm"
 import Quiz from "./components/Quiz/Quiz"
 import { useState } from "react"
+import OldExams from "./components/oldExams/oldExams"
 
 function App() {
 
@@ -25,7 +26,7 @@ function App() {
               <Quiz questionsArray={questionsArray}/>
             </>
           } />
-          <Route path="/past-exam" element={""} />
+          <Route path="/past-exam" element={<OldExams/>} />
         </Routes>
 
 
