@@ -15,7 +15,7 @@ function Quiz({ questionsArray = [] }) {
         [position]);
 
     useEffect(
-        () => {addQyA(questionsArray)},[]
+        () => {addQyA(questionsArray)}, [questionsArray]
     );
 
     const updateCurrentQuestion = (pos) => {
