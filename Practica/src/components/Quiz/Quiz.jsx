@@ -1,16 +1,14 @@
 import Controls from "./Controls/Controls";
 import Questions from "./Questions/Questions";
 import { useEffect, useState } from "react";
-import { getExamFromLS, saveExamInLS } from "../../service/kahootservice";
 import { sortRandom } from "../../service/kahootservice";
 
-function Quiz({ questionsArray = [], saveOldExams = true }) {
+function Quiz({ questionsArray = []}) {
 
     const [QyA, setQyA] = useState([]);
     const [currentQuestion, setCurrentQuestion] = useState([]);
     const [position, setPosition] = useState(1);
     const [sortedAnswers, setSortedAnswers] = useState([]);
-    const oldExams = getExamFromLS();
 
     useEffect(
         () => { updateCurrentQuestion(position - 1) },
@@ -38,13 +36,6 @@ function Quiz({ questionsArray = [], saveOldExams = true }) {
         setQyA([...QyA]);
         setPosition(1);
         setCurrentQuestion(QyA[0]);
-        if (QyA.length != 0) {
-            if (saveOldExams) {
-                oldExams.push(QyA);
-                saveExamInLS(oldExams);
-            }
-            setSortedAnswers(sortRandom([QyA[0].correct_answer, ...QyA[0].incorrect_answers]));
-        }
     }
 
     const onPageChange = (_page = 0) => {

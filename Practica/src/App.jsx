@@ -2,18 +2,25 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Header from "./components/Header/Header"
 import SearchForm from "./components/Search/SearchForm"
 import Quiz from "./components/Quiz/Quiz"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import OldExams from "./components/oldExams/oldExams"
+import { getExamFromLS, saveExamInLS } from "./service/kahootservice"
 
 function App() {
 
   const [questionsArray, setQuestionsArray] = useState([]);
+  const oldExams = getExamFromLS();
 
   const getQuestions = (_questions) => {
     setQuestionsArray(_questions);
   }
 
-  //sortear afuera del componente
+  useEffect(()=>{
+    if(questionsArray.length != 0){
+      oldExams.push(questionsArray);
+      saveExamInLS(oldExams);
+    }}
+    ,[questionsArray]);
 
   return (
     <>
@@ -23,10 +30,10 @@ function App() {
           <Route path="/" element={
             <>
               <SearchForm getQuestions={getQuestions} />
-              <Quiz questionsArray={questionsArray}/>
+              <Quiz questionsArray={questionsArray} />
             </>
           } />
-          <Route path="/past-exam" element={<OldExams/>} />
+          <Route path="/past-exam" element={<OldExams />} />
         </Routes>
 
 

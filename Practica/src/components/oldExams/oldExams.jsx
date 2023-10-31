@@ -14,7 +14,7 @@ const OldExams = () => {
     return(
     <section id="oldExams-section" className="flex flex-col gap-6 pt-6">
 
-        {oldExamsArray.map((e)=>{ return <Quiz questionsArray={e} key={keyIncrement()} saveOldExams={false}/> })}
+        {oldExamsArray.map((e)=>{ return <Quiz questionsArray={e} key={keyIncrement()}/> })}
 
     </section>
     ); 
